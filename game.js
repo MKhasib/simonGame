@@ -4,10 +4,10 @@ var userClickedPattern = [];
 var level = 0;
 var pressAnyKey = true;
 var time = 2;
-var showEffect = true;
+var anserIsTrue = true;
 $(document).keypress(function(event) {
   if (pressAnyKey) {
-    showEffect = true;
+    anserIsTrue = true;
     nextSequence();
     pressAnyKey = false;
   }
@@ -19,7 +19,7 @@ $('.btn').click(function() {
     userClickedPattern.push(userChosenColour);
     checkAnswer(userClickedPattern.length - 1);
     // console.log(userClickedPattern);
-    if (showEffect) {
+    if (anserIsTrue) {
       playSound(userChosenColour);
       animatePress(userChosenColour);
     }
@@ -29,8 +29,9 @@ $('.btn').click(function() {
 
 function checkAnswer(currentLevel) {
   if (userClickedPattern[currentLevel] === gamePattern[currentLevel]) {
+    console.log("success");
+
     if (userClickedPattern.length == gamePattern.length) {
-      console.log("success");
       for (let i = 0; i < gamePattern.length; i++) {
         startSequence(gamePattern[i], i + 1);
       }
@@ -38,8 +39,6 @@ function checkAnswer(currentLevel) {
         nextSequence();
       }, (time++) * 1000);
       userClickedPattern = [];
-    } else {
-
     }
   } else {
     playSound("wrong");
@@ -49,7 +48,7 @@ function checkAnswer(currentLevel) {
       $("body").removeClass("game-over");;
     }, 200);
     startOver();
-    showEffect = false;
+    anserIsTrue = false;
 
   }
 }
